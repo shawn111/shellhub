@@ -14,6 +14,7 @@
     "core-js": "^3.6.5",
     "eslint-plugin-import": "^2.22.1",
     "flush-promises": "^1.0.2",
+    "gitter-sidecar": "^1.5.0",
     "is-valid-hostname": "0.1.0",
     "moment": "^2.29.1",
     "moment-duration-format": "^2.3.2",

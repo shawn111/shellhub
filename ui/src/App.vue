@@ -64,7 +64,7 @@
           </v-chip>
         </template>
       </v-menu>
-      <v-chip>
+      <v-chip @click="toggleChat()">
         <v-icon>help</v-icon>
       </v-chip>
 
@@ -141,12 +141,17 @@
 
       <snackbar />
     </v-main>
+    <aside
+      ref="chat"
+      class="gitter-chat-embed is-collapsed"
+    />
   </v-app>
 </template>
 
 <script>
 
 import Notification from '@/components/app_bar/notification/Notification';
+import GitterSidecar from 'gitter-sidecar';
 
 export default {
   name: 'App',
@@ -159,6 +164,8 @@ export default {
     return {
       drawer: true,
       clipped: false,
+      chat: null,
+      chatOpen: false,
       items: [
         {
           icon: 'dashboard',
@@ -216,6 +223,13 @@ export default {
     },
   },
 
+  mounted() {
+    this.chat = new GitterSidecar({ room: 'shellhub-io/community', activationElement: false, targetElement: this.$refs.chat });
+    this.$refs.chat.addEventListener('gitter-chat-toggle', (e) => {
+      this.chatOpen = e.detail.state;
+    });
+  },
+
   methods: {
     logout() {
       this.$store.dispatch('auth/logout').then(() => {
@@ -233,6 +247,9 @@ export default {
       default:
         break;
       }
+    },
+    toggleChat() {
+      this.chat.toggleChat(!this.chatOpen);
     },
   },
 };
