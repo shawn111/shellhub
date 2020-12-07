@@ -64,7 +64,17 @@ export default {
           path: '/settings/namespace-manager',
           hidden: this.currentInANamespace,
         },
-      ];
+        {
+          title: 'Private Keys',
+          path: '/settings/private_keys',
+        },
+      ]
+    },
+  },
+
+  computed: {
+    visibleItems() {
+      return this.items.filter((item) => !item.hidden);
     },
   },
 };
