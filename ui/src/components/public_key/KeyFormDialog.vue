@@ -163,6 +163,7 @@ export default {
     setLocalVariable() {
       if (this.createKey) {
         this.keyLocal = {
+          id: '',
           name: '',
           data: '',
         };

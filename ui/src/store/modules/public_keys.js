@@ -28,8 +28,8 @@ export default {
       Vue.set(state, 'publicKey', res.data);
     },
 
-    removePublicKey: (state, fingerprint) => {
-      state.publicKeys.splice(state.publicKeys.findIndex((d) => d.fingerprint === fingerprint), 1);
+    removePublicKey: (state, id) => {
+      state.publicKeys.splice(state.publicKeys.findIndex((d) => d.id === id), 1);
     },
 
     clearListPublicKeys: (state) => {
@@ -71,9 +71,9 @@ export default {
       await putPublicKey(data);
     },
 
-    remove: async (context, fingerprint) => {
-      await removePublicKey(fingerprint);
-      context.commit('removePublicKey', fingerprint);
+    remove: async (context, id) => {
+      await removePublicKey(id);
+      context.commit('removePublicKey', id);
     },
   },
 };

@@ -25,7 +25,7 @@
           :headers="headers"
           :items="getPublicKeys"
           data-test="dataTable-field"
-          item-key="fingerprint"
+          item-key="id"
           :sort-by="['started_at']"
           :sort-desc="[true]"
           :items-per-page="10"
@@ -53,7 +53,7 @@
               @update="refresh"
             />
             <PublicKeyDelete
-              :fingerprint="item.fingerprint"
+              :id="item.id"
               @update="refresh"
             />
           </template>

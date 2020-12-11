@@ -54,7 +54,7 @@ export default {
   name: 'PublicKeyDelete',
 
   props: {
-    fingerprint: {
+    id: {
       type: String,
       required: true,
     },
@@ -78,7 +78,7 @@ export default {
       switch (this.action) {
       case 'Public':
         try {
-          await this.$store.dispatch('publickeys/remove', this.fingerprint);
+          await this.$store.dispatch('publickeys/remove', this.id);
           this.$store.dispatch('snackbar/showSnackbarSuccessAction', this.$success.publicKeyDeleting);
           this.dialog = false;
         } catch {
