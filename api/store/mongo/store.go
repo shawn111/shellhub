@@ -3,6 +3,7 @@ package mongo
 import (
 	"context"
 	"errors"
+	"fmt"
 	"strconv"
 	"strings"
 	"time"
@@ -994,12 +995,16 @@ func buildFilterQuery(filters []models.Filter) ([]bson.M, error) {
 }
 
 func (s *Store) ListUsers(ctx context.Context, pagination paginator.Query, filters []models.Filter) ([]models.User, int, error) {
+	fmt.Println("list users 1")
 	queryMatch, err := buildFilterQuery(filters)
+	fmt.Println("list users 2")
 	query := []bson.M{}
+	fmt.Println("list users 3")
 
 	if len(queryMatch) > 0 {
 		query = append(query, queryMatch...)
 	}
+	fmt.Println("list users 4")
 
 	// Only match for the respective tenant if requested
 	if tenant := apicontext.TenantFromContext(ctx); tenant != nil {
@@ -1009,19 +1014,24 @@ func (s *Store) ListUsers(ctx context.Context, pagination paginator.Query, filte
 			},
 		})
 	}
+	fmt.Println("list users 5")
 
 	queryCount := append(query, bson.M{"$count": "count"})
+	fmt.Println("list users 6")
 	count, err := aggregateCount(ctx, s.db.Collection("users"), queryCount)
+	fmt.Println("list users 7")
 	if err != nil {
 		return nil, 0, err
 	}
-
+	fmt.Println("list users 8")
 	if pagination.Page != 0 && pagination.PerPage != 0 {
 		query = append(query, buildPaginationQuery(pagination)...)
 	}
+	fmt.Println("list users 9")
 
 	users := make([]models.User, 0)
 	cursor, err := s.db.Collection("users").Aggregate(ctx, query)
+	fmt.Println("list users 10")
 	if err != nil {
 		return nil, 0, err
 	}
